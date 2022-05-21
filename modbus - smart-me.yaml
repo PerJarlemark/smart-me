@@ -1,0 +1,343 @@
+## Home assistant Modbus configuration for the smart.me module for the Kamstrup Powermeter
+## https://web.smart-me.com/en/project/kamstrup-module/
+## it requieres internet access and an active smart-me subscription to keep the Modbus port open localy
+
+## This configuration is testen with Home Assistant 2022.05.03 
+
+  ## Modbus Sensor register address for smart-me Energy Meter
+  ## https://doc.smart-me.com/cloud/modbus-tcp
+  
+  ## Konvert HEX to Decimal
+  ## https://www.rapidtables.com/convert/number/hex-to-decimal.html
+
+  ## List of device_clases: 
+  ## https://www.home-assistant.io/integrations/sensor/
+
+  ## List of Valid unit_of_Measurement: 
+  ## https://developers.home-assistant.io/docs/core/entity/sensor/#properties
+
+
+# modbus:
+  - type: tcp
+    host: 192.168.100.100
+    port: 502
+    name: hub1
+    delay: 2
+    close_comm_on_error: true
+ 
+    sensors:
+      - name: Kamstrup - Serial Number
+        address: 8191
+        data_type: int32
+        count: 2
+        data_type: int32
+        
+      - name: Kamstrup - Date Time (UTC)
+        address: 8193
+        count: 2
+        data_type: int32
+        unit_of_measurement: Unix Time Stamp
+        device_class: date
+        # device_class: timestamp
+        
+      - name: Kamstrup - Power Total (All Phases)
+        address: 8195
+        count: 2
+        data_type: int32
+        unit_of_measurement: W
+        scan_interval: 10
+        device_class: power
+
+      - name: Kamstrup - Power Phase L1
+        address: 8197
+        count: 2
+        data_type: int32
+        unit_of_measurement: W
+        device_class: power
+
+      - name: Kamstrup - Power Phase L2
+        address: 8199
+        count: 2
+        data_type: int32
+        unit_of_measurement: W
+        device_class: power
+
+      - name: Kamstrup - Power Phase L3
+        address: 8201
+        count: 2
+        data_type: int32
+        unit_of_measurement: W
+        scan_interval: 10
+        device_class: power
+
+      - name: Kamstrup - Reactive Power Total (All Phases)
+        address: 8203
+        count: 2
+        data_type: int32
+        unit_of_measurement: Var
+        device_class: reactive_power
+
+      - name: Kamstrup - Reactive Power Phase L1
+        address: 8205
+        count: 2
+        data_type: int32
+        unit_of_measurement: Var
+        device_class: reactive_power
+
+      - name: Kamstrup - Reactive Power Phase L2
+        address: 8207
+        count: 2
+        data_type: int32
+        unit_of_measurement: Var
+        device_class: reactive_power
+
+      - name: Kamstrup - Reactive Power Phase L3
+        address: 8209
+        count: 2
+        data_type: int32
+        unit_of_measurement: Var      
+        device_class: reactive_power
+
+      - name: Kamstrup - Voltage Phase L1
+        address: 8211
+        count: 2
+        scale: 0.001
+        data_type: int32
+        unit_of_measurement: V      
+        device_class: voltage
+
+      - name: Kamstrup - Voltage Phase L2
+        address: 8213
+        count: 2
+        scale: 0.001
+        data_type: int32
+        unit_of_measurement: V        
+        device_class: voltage
+
+      - name: Kamstrup - Voltage Phase L3
+        address: 8215
+        count: 2
+        scale: 0.001
+        data_type: int32
+        unit_of_measurement: V
+        device_class: voltage
+
+      - name: Kamstrup - Current Phase L1
+        address: 8217
+        count: 2
+        precision: 2
+        scale: 0.01
+        data_type: int32
+        unit_of_measurement: A
+        scan_interval: 10
+        device_class: current
+
+      - name: Kamstrup - Current Phase L2
+        address: 8219
+        count: 2
+        precision: 2
+        scale: 0.01
+        data_type: int32
+        unit_of_measurement: A
+        scan_interval: 10
+        device_class: current
+
+      - name: Kamstrup - Current Phase L3
+        address: 8221
+        count: 2
+        precision: 2
+        scale: 0.01
+        data_type: int32
+        unit_of_measurement: A
+        scan_interval: 10
+        device_class: current
+
+      - name: Kamstrup - Power Factor L1
+        address: 8223
+        count: 2
+        data_type: int32
+        unit_of_measurement: cos phi
+        device_class: power_factor
+
+      - name: Kamstrup - Power Factor L2
+        address: 8224
+        count: 2
+        data_type: int32
+        unit_of_measurement: cos phi
+        device_class: power_factor
+
+      - name: Kamstrup - Power Factor L3
+        address: 8225
+        count: 2
+        data_type: int32
+        unit_of_measurement: cos phi
+
+      - name: Kamstrup - Active Tariff
+        address: 8226
+        count: 2
+        data_type: int32
+        device_class: power_factor
+
+      - name: Kamstrup - Import Active Energy Total MWh
+        address: 8227
+        count: 2
+        data_type: int32
+        unit_of_measurement: MWh
+        device_class: energy
+        state_class: total_increasing
+
+      - name: Kamstrup - Export Active Energy Total MWh
+        address: 8231
+        count: 2
+        data_type: int32
+        unit_of_measurement: MWh
+        device_class: energy
+        state_class: total_increasing
+      
+      - name: Kamstrup - Import Active Energy T1
+        address: 8235
+        count: 2
+        data_type: int32
+        unit_of_measurement: Wh
+        device_class: energy
+        state_class: total_increasing
+
+      - name: Kamstrup - Import Active Energy T2
+        address: 8239
+        count: 2
+        data_type: int32
+        unit_of_measurement: Wh
+        device_class: energy
+        state_class: total_increasing
+  
+      - name: Kamstrup - Export Active Energy T1
+        address: 8243
+        count: 2
+        data_type: int32
+        unit_of_measurement: Wh
+        device_class: energy
+        state_class: total_increasing
+
+      - name: Kamstrup - Export Active Energy T2
+        address: 8247
+        count: 2
+        data_type: int32
+        unit_of_measurement: Wh
+        device_class: energy
+        state_class: total_increasing
+
+      - name: Kamstrup - Reactive Energy Q1
+        address: 8251
+        count: 2
+        data_type: int32
+        device_class: energy
+        unit_of_measurement: Varh
+        state_class: total_increasing
+
+      - name: Kamstrup - Reactive Energy Q2
+        address: 8255
+        count: 2
+        data_type: int32
+        unit_of_measurement: Varh
+        device_class: energy
+        state_class: total_increasing
+            
+      - name: Kamstrup - Reactive Energy Q3
+        address: 8259
+        count: 2
+        data_type: int32
+        unit_of_measurement: Varh
+        device_class: energy
+        state_class: total_increasing
+           
+      - name: Kamstrup - Reactive Energy Q4
+        address: 8263
+        count: 2
+        data_type: int32
+        unit_of_measurement: Varh
+        device_class: energy
+        state_class: total_increasing
+
+      - name: Kamstrup - Import Active Energy Total kWh
+        address: 8267
+        count: 2
+        data_type: int32
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.001
+
+      - name: Kamstrup - Export Active Energy Total kWh
+        address: 8269
+        count: 2
+        data_type: int32
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.001
+
+      - name: Kamstrup - Import Active Energy T1
+        address: 8271
+        count: 2
+        data_type: int32
+        unit_of_measurement: Wh
+        device_class: energy
+        state_class: total_increasing
+
+      - name: Kamstrup - Import Active Energy T2
+        address: 8273
+        count: 2
+        data_type: int32
+        unit_of_measurement: Wh
+        device_class: energy
+        state_class: total_increasing
+
+      - name: Kamstrup - Export Active Energy T1
+        address: 8275
+        count: 2
+        data_type: int32
+        unit_of_measurement: Wh
+        device_class: energy
+        state_class: total_increasing
+
+      - name: Kamstrup - Export Active Energy T2
+        address: 8277
+        count: 2
+        data_type: int32
+        unit_of_measurement: Wh
+        device_class: energy
+        state_class: total_increasing
+
+      - name: Kamstrup - Reactive Energy Q1
+        address: 8279
+        count: 2
+        data_type: int32
+        unit_of_measurement: Varh
+        device_class: energy
+        state_class: total_increasing
+
+      - name: Kamstrup - Reactive Energy Q2
+        address: 8281
+        count: 2
+        data_type: int32
+        unit_of_measurement: Varh
+        device_class: energy
+        state_class: total_increasing
+
+      - name: Kamstrup - Reactive Energy Q3
+        address: 8283
+        count: 2
+        data_type: int32
+        unit_of_measurement: Varh
+        device_class: energy
+        state_class: total_increasing
+
+      - name: Kamstrup - Reactive Energy Q4
+        address: 8285
+        count: 2
+        data_type: int32
+        unit_of_measurement: Varh
+        device_class: energy
+        state_class: total_increasing
+
+
